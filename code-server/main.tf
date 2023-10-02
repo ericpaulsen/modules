@@ -50,6 +50,15 @@ variable "log_path" {
   default     = "/tmp/code-server.log"
 }
 
+variable "share" {
+  type = string
+  allowed_values = [
+    "owner",
+    "authenticated",
+    "public"
+  ]
+}
+
 resource "coder_script" "code-server" {
   agent_id     = var.agent_id
   display_name = "code-server"
@@ -72,7 +81,7 @@ resource "coder_app" "code-server" {
   url          = "http://localhost:${var.port}/?folder=${var.folder}"
   icon         = "/icon/code.svg"
   subdomain    = false
-  share        = "owner"
+  share        = var.share
 
   healthcheck {
     url       = "http://localhost:${var.port}/healthz"
