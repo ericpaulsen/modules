@@ -51,11 +51,10 @@ variable "log_path" {
 
 variable "share" {
   type = string
-}
-
-validation {
-  condition     = var.share == "owner" || var.share == "authenticated" || var.share == "public"
-  error_message = "incorrect value"
+  validation {
+    condition     = var.share == "owner" || var.share == "authenticated" || var.share == "public"
+    error_message = "incorrect value"
+  }
 }
 
 resource "coder_script" "code-server" {
